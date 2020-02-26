@@ -1,0 +1,147 @@
+#===========================================================
+WEB CRAWLER 
+Writer : Pratik Shrikant Kabara
+Email : kabrapratik28@gmail.com
+Github : https://github.com/kabrapratik28/craw
+#===========================================================
+To Run requirements
+Beautful soup python
+reppy
+
+Files Edit
+1. Data
+enter keywords on which you want focused crawler
+
+2.Depth
+put depth upto which you want to crawl
+
+3.Url
+Put Seed list
+(put url in format http://example.com)
+
+4.Page
+Put number of pages you want to crawl
+
+
+
+Run
+Python mainfun.py > out
+
+
+OUTPUT 
+out            (file created in folder)
+segment        (folder in which all html code)
+#==========================================================
+ALGORITHM 
+
+1.Take information of seed from seed reader
+2.Take information of focused data from data reader
+3.Take information of depth from depth reader
+4.Given url check is it broken?
+5.Yes, add data as broken url
+6.No, add data 
+7.Mark as visited site (For politness)
+8.Write data into its repective object
+9.Extract list of urls on that page, and its respective anchors IF DEPTH NOT EXCEED. IF EXCEED DO NOT TAKE URLS 
+10.Focus urls (According to user data)
+11.Check for duplicate if duplicate add only anchor 
+12.Make all urls in proper format (Removal of same page, extra slashes, etc.)
+13.Check for Robots protocol and site presentation (Other than broken url)
+14.No, Add data as robots denied and take new url from queue
+15.Yes, Add to site queue dictionary
+16.Add urls depth 
+17.Add counter 
+18.Take new url from fetcher 
+19.Fetcher will check time and queue and return 1 url. If not proper time put back in queue.
+20.Repeat same procedure upto url page no. not exceed, or depth depth not exceed.
+
+#===========================================================
+FUNCTIONS IMPLEMENTED
+
+
+0.Seeds, Depth, No. of pages to crawl, data (For focused cawler)  
+
+1.Robots cache (IMPORTED)
+  Robots cache program imported to cache robots.txt files
+  and reduce site load (Politness increases)
+
+2.Try Except (Url Broken)
+  Url is broken then catches here. Any site contain url which is now not valid now
+
+3.User Agent (Student Bot)
+  Bot name 
+
+4.Date time set (Mark as visited)  //When opened
+  For politness it is mark as visited when url requested to site 
+
+5.Storing in Segment Folder (HTML code)
+  In this folder all html code saved
+
+6.Removing Script(javascript) and CSS
+  Many sites are dyanamic so there javascript contain and css cotain removed when parsed
+
+7.Focused by seeing words in anchor 
+  Crawler is focused by words provided
+
+8.URL normalization
+      https://
+      http://
+      http://www.
+      www.
+      http://abc.com
+      http://abc.com/
+      /asd => http://asd.com/asd  (Absolute)
+      ppp => http://asd.com/asd/ppp  (Relative)
+	  #    (Same page reference)
+
+      site name only lower case because other are case sensative
+
+9.Data stored in utf-8 because site in many languages
+  Many sites written in other languaes. It supports to them.
+
+10.Duplication checking
+      If duplicate add anchor to list of anchor
+
+11.Robots checking
+   Respecting to sites. Follow there provided rules.
+   (Using cache and all urls of same page checked at that time so getting more hits to robots cache)
+
+12. Robots checking Site actually present on internet 
+    If robots denied add Data as "ROBOTS DENIED"
+
+13. Site dyanamism removed after question mark
+    Many sites conatain urls made dyanamically. 
+    Remove there dyanamism
+ 
+14.One queue impleted 
+    For time (POLITNESS POLICY)
+
+15.Queue feeder feeds queue which gives url
+   Feeds queue when its empty from site queue
+
+16.Url_giver gives url on request 
+    It checks time 
+    If time is less than 2 puts at 10 nuber in queue (Can be varied)
+    [IMPLEMENTED CIRCULAR QUEUE IN FRONT OF QUEUE]
+
+17.Depth implemented 
+   Calculate depth 
+   Not go ahead of user given depth 
+
+18.Stop condition 
+	Queue Ends
+	Depth reached
+	No of urls crawl limit exceeds
+
+
+#==========================================================
+WHERE CAN IMPROVED ???
+
+
+1.THREADS CAN BE IMPLEMENTATED
+2.CIRCULAR QUEUE ALL ELEMENT IS BEFORE 2 SEC .... 
+3.SOME SITES MAKES CRAWLER LATE BY SOME SECOND SOLUTION ON THAT
+   (THREADS)
+4.FTP CALLS
+5.LATER IMPOVED FOR ANCHOR WINDOW AND SCORE CALCULATION VIA VECTOR SPACE. PAGE RANK ALSO CAN BE EMBEDDED
+6.SECOND QUEUE OF PRIORITY NOT IMPLEMENTED NO DATA AVAILABLE FOR THAT AND CAN BE USED PAGE RANK
